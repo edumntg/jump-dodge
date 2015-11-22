@@ -26,7 +26,7 @@ public class Bounce : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.A))
         {
-            if(perc == 1 && player.CanJump())
+			if(perc == 1 && player.CanJump())
             {
                 isBouncing = true;
                 lerpTime = 1;
@@ -41,12 +41,7 @@ public class Bounce : MonoBehaviour {
             player.isOnFloor = false;
         }
         
-        startPos = player.GetPosition();
-
-        if (!move)
-        {
-            endPos = startPos;
-        }
+		startPos = player.GetPosition();
 
         if(Input.GetKeyDown(KeyCode.D) && player.CanJump())
         {
@@ -61,17 +56,16 @@ public class Bounce : MonoBehaviour {
             move = true;
             player.isOnFloor = false;
         }
+
         currentLerpTime += Time.deltaTime * 5;
         perc = currentLerpTime / lerpTime;
+
         if (move)
         {
-            foreach (Transform t in gameObject.GetComponentsInChildren<Transform>())
-            {
-                t.position = Vector3.Lerp(startPos, endPos, perc);
-            }
+			gameObject.transform.position = Vector3.Lerp(startPos, endPos, perc);
         }
 
-        if (perc > 0.8)
+        if (perc > 0.9)
         {
             perc = 1;
         }

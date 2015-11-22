@@ -37,23 +37,6 @@ public class Generation : MonoBehaviour {
                 ObjectI.transform.SetParent(gameObject.transform.FindChild("Tiles").transform);
                 tiles.Add(ObjectI);
 
-                /*
-                //let's add obstacles to this tile
-                int obstaclesCount = Random.Range(0, 4); //1 to 3
-                int[] separations = {-3, 3};
-                for (int k = 1; k <= obstaclesCount; k++)
-                {
-                    string obstacleName = ObstaclesArray[Random.Range(0, ObstaclesArray.Length - 1)];
-                    item = items.GetItem(obstacleName);
-                    Vector3 basePosition = ObjectI.transform.position;
-                    Vector3 obstaclePosition = new Vector3(basePosition.x, 0, 0) + item.GetBasePosition() + new Vector3(separations[(int)Random.Range(0, 2)], 0, separations[(int)Random.Range(0, 2)]);
-                    prefab = AssetDatabase.LoadAssetAtPath(item.GetDirectory(), typeof(GameObject));
-                    GameObject ObstacleObject = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-                    ObstacleObject.transform.position = obstaclePosition;
-                    ObstacleObject.transform.SetParent(gameObject.transform.FindChild("Obstacles").transform);
-                    obstacles.Add(ObstacleObject);
-                }
-                */
             }
         }
 

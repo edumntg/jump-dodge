@@ -7,7 +7,7 @@ using System;
 
 public class Items {
 
-    string file = "Assets/Items/items.xml";
+    string file = "Assets/Scripts/Loaders/items.xml";
     bool loaded = false;
     List<Item> items = new List<Item>();
 

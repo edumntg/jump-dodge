@@ -8,6 +8,7 @@ public class Item
     public string description;
     public string fileDir;
     public Vector3 basePosition;
+    public GameObject gameObject;
 
     public Item()
     {
@@ -20,5 +21,6 @@ public class Item
     public string GetDirectory() { return fileDir; } 
     public Vector3 GetBasePosition() {return basePosition;}
 
+    public GameObject GetGameObject() { return gameObject; }
 
 }

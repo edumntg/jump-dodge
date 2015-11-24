@@ -5,12 +5,10 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 
     public bool isOnFloor;
-    bool alive;
     public bool started = false;
 	// Use this for initialization
 	void Start () {
         isOnFloor = false;
-        alive = true;
 	}
 	
 	// Update is called once per frame
@@ -31,6 +29,7 @@ public class Player : MonoBehaviour {
             if(environmentScrolling != null)
             {
                 environmentScrolling.speed = Vector3.zero;
+                environmentScrolling.scroll = false;
                 Kill();
             }
         }
@@ -47,7 +46,6 @@ public class Player : MonoBehaviour {
         {
             anim.Stop();
         }
-        alive = false;
 
     }
 }

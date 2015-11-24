@@ -20,23 +20,20 @@ public class Generation : MonoBehaviour {
         if (items.LoadItems() && characters.LoadCharacters())
         {
             Object prefab;
-            prefab = AssetDatabase.LoadAssetAtPath(characters.GetCharacter("Guy").GetDirectory(), typeof(GameObject));
-
-            GameObject PlayerObject = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+            prefab = Resources.Load(characters.GetCharacter("Guy").GetDirectory(), typeof(GameObject));
+            GameObject PlayerObject = Instantiate(prefab) as GameObject;
             PlayerObject.transform.position = new Vector3(0, 0.5f, 0);
             PlayerObject.transform.SetParent(gameObject.transform.parent.FindChild("PlayerObject").transform);
-
             for (int i = -4; i <= 4; i++) //initial 8 tiles
             {
                 int rand = Random.Range(0, 2);
                 GameObject ObjectI;
                 Item item = items.GetItem(TilesArray[rand]);
-                prefab = AssetDatabase.LoadAssetAtPath(item.GetDirectory(), typeof(GameObject));
+                prefab = Resources.Load(item.GetDirectory(), typeof(GameObject));
                 ObjectI = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
                 ObjectI.transform.position = new Vector3(i * 9, 0, 0) + item.GetBasePosition();
                 ObjectI.transform.SetParent(gameObject.transform.FindChild("Tiles").transform);
                 tiles.Add(ObjectI);
-
             }
         }
 
@@ -51,23 +48,18 @@ public class Generation : MonoBehaviour {
             int rand = Random.Range(0, 2);
             GameObject ObjectI;
             Object prefab;
-            Object subPrefab;
-            GameObject SubObjectI;
-            Debug.Log(rand);
             Item item = items.GetItem(TilesArray[rand]);
-            prefab = AssetDatabase.LoadAssetAtPath(item.GetDirectory(), typeof(GameObject));
-            ObjectI = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+            prefab = Resources.Load(item.GetDirectory(), typeof(GameObject));
+            ObjectI = Instantiate(prefab) as GameObject;
             ObjectI.transform.position = new Vector3(lastRoad.transform.position.x + 9, 0, item.GetBasePosition().z);
             ObjectI.transform.SetParent(gameObject.transform.FindChild("Tiles").transform);
             tiles.Add(ObjectI);
-            //Debug.Log(tiles.Count);
-            
             
             //let's add obstacles to this tile
             Player player = gameObject.transform.parent.GetComponentInChildren<Player>();
             if (player != null && player.started == true)
             {
-                int obstaclesCount = Random.Range(0, 4); //1 to 3
+                int obstaclesCount = Random.Range(0, 3); //1 to 2
                 int[] separations = { -3, 0, 3 };
                 for (int k = 1; k <= obstaclesCount; k++)
                 {
@@ -75,7 +67,7 @@ public class Generation : MonoBehaviour {
                     item = items.GetItem(obstacleName);
                     Vector3 basePosition = ObjectI.transform.position;
                     Vector3 obstaclePosition = new Vector3(basePosition.x, 0, 0) + item.GetBasePosition() + new Vector3(separations[(int)Random.Range(0, 3)], 0, separations[(int)Random.Range(0, 3)]);
-                    prefab = AssetDatabase.LoadAssetAtPath(item.GetDirectory(), typeof(GameObject));
+                    prefab = Resources.Load(item.GetDirectory(), typeof(GameObject));
                     GameObject ObstacleObject = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
                     ObstacleObject.transform.position = obstaclePosition;
                     ObstacleObject.transform.SetParent(gameObject.transform.FindChild("Obstacles").transform);
@@ -85,23 +77,24 @@ public class Generation : MonoBehaviour {
         }
 
         //let's delete roads outside of camera
-        foreach(GameObject obj in tiles)
+        foreach(GameObject it in tiles)
         {
-            distance = GetPlayer().position - obj.transform.position;
-            if(distance.x >= 20 && GetPlayer().position.x > obj.transform.position.x && tiles.Count > 9)
+            distance = GetPlayer().position - it.transform.position;
+            if(distance.x >= 20 && GetPlayer().position.x > it.transform.position.x && tiles.Count > 9)
             {
-                Destroy(obj);
-                tiles.Remove(obj);
+                Destroy(it);
+                tiles.Remove(it);
                 break;
             }
         }
-        foreach (GameObject obj in obstacles)
+
+        foreach(GameObject it in obstacles)
         {
-            distance = GetPlayer().position - obj.transform.position;
-            if (distance.x >= 30 && GetPlayer().position.x > obj.transform.position.x)
+            distance = GetPlayer().position - it.transform.position;
+            if (Mathf.Abs(distance.x) >= 30 && GetPlayer().position.x > it.transform.position.x)
             {
-                Destroy(obj);
-                obstacles.Remove(obj);
+                Destroy(it);
+                obstacles.Remove(it);
                 break;
             }
         }
@@ -117,5 +110,34 @@ public class Generation : MonoBehaviour {
             }
         }
         return null;
+    }
+
+    List<GameObject> GetObjectsAround(GameObject obj, List<GameObject> list)
+    {
+        List<GameObject> objs = new List<GameObject>();
+        Vector3 main = obj.transform.position;
+        Vector3[] positions = 
+        {
+            new Vector3(main.x + 1, main.y, main.z + 1),
+            new Vector3(main.x + 1, main.y, main.z),
+            new Vector3(main.x + 1, main.y, main.z - 1),
+            new Vector3(main.x, main.y, main.z + 1),
+            new Vector3(main.x, main.y, main.z - 1),
+            new Vector3(main.x - 1, main.y, main.z + 1),
+            new Vector3(main.x - 1, main.y, main.z),
+            new Vector3(main.x - 1, main.y, main.z - 1)
+        };
+
+        foreach(GameObject o in list)
+        {
+            foreach(Vector3 pos in positions)
+            {
+                if(o.transform.position == pos)
+                {
+                    objs.Add(o);
+                }
+            }
+        }
+        return objs;
     }
 }

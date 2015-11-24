@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class Characters {
 
-    string file = "Assets/Characters/characters.xml";
+    string file = "Assets/Scripts/Loaders/characters.xml";
     bool loaded = false;
     List<Character> characters = new List<Character>();
 

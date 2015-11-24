@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Scrolling : MonoBehaviour {
 
@@ -8,9 +9,16 @@ public class Scrolling : MonoBehaviour {
 
     public bool linkedToCamera = false;
     public bool isLooping = true;
-    Vector3 movement;
+    public bool scroll = true;
 
-    int lastXPos;
+    Vector3 movement;
+    int timeElapsed = 0;
+    int lastIncreased = 0;
+
+    int increaseSpeedElapsed = 30; //each n seconds speed will be increased by y
+    Vector3 speedToIncrease = new Vector3(1, 0, 0);
+    
+
 	void Start () {
         //
 
@@ -18,21 +26,33 @@ public class Scrolling : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if(!scroll)
+        {
+            return;
+        }
+
         Transform[] childs = gameObject.GetComponentsInChildren<Transform>();
         movement = new Vector3(speed.x * direction.x, speed.y * direction.y, speed.z * direction.z);
-        movement *= Time.deltaTime / 5;
+        movement *= Time.deltaTime;
         foreach(Transform t in childs)
         {
-            if (t.name.Contains("Road") || t.name.Contains("Grass") || t.name.Contains("Tree"))
+            if (t.name.Contains("Road") || t.name.Contains("Tree") || t.name.Contains("Grass"))
             {
                 t.Translate(movement);
             }
         }
 
-
         if(linkedToCamera)
         {
             Camera.main.transform.Translate(movement);
+        }
+
+        timeElapsed = Convert.ToInt32(Time.time);
+        if(timeElapsed > 0 && timeElapsed % increaseSpeedElapsed == 0 && timeElapsed > lastIncreased)
+        {
+            lastIncreased = timeElapsed;
+            speed += speedToIncrease;
         }
 	}
 }

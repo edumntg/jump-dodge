@@ -1,0 +1,6 @@
+<items>
+	<item id="1" name="Grass" file="Tiles/Grass" base="4,0,-4"/>
+	<item id="2" name="Road" file="Tiles/Road" base="4,0,-2"/>
+  <item id="3" name="Tall Tree" file="Obstacles/Tree1" base="0,1,-0.5"/>
+  <item id="4" name="Small Tree" file="Obstacles/Tree2" base="0,1,-0.5"/>
+</items>

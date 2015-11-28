@@ -63,7 +63,7 @@ public class Generation : MonoBehaviour {
                 int[] separations = { -3, 0, 3 };
                 for (int k = 1; k <= obstaclesCount; k++)
                 {
-                    string obstacleName = ObstaclesArray[Random.Range(0, ObstaclesArray.Length - 1)];
+                    string obstacleName = ObstaclesArray[Random.Range(0, ObstaclesArray.Length)];
                     item = items.GetItem(obstacleName);
                     Vector3 basePosition = ObjectI.transform.position;
                     Vector3 obstaclePosition = new Vector3(basePosition.x, 0, 0) + item.GetBasePosition() + new Vector3(separations[(int)Random.Range(0, 3)], 0, separations[(int)Random.Range(0, 3)]);

@@ -9,7 +9,7 @@ public class Generation : MonoBehaviour {
 
     List<GameObject> tiles = new List<GameObject>();
     List<GameObject> obstacles = new List<GameObject>();
-    string[] ObstaclesArray = { "Small Tree", "Tall Tree" };
+    string[] ObstaclesArray = { "Small Tree", "Tall Tree"};
     string[] TilesArray = { "Road", "Grass" };
 
 	void Start () 

@@ -37,7 +37,7 @@ public class Scrolling : MonoBehaviour {
         movement *= Time.deltaTime;
         foreach(Transform t in childs)
         {
-            if (t.name.Contains("Road") || t.name.Contains("Tree") || t.name.Contains("Grass"))
+            if (t.name.Contains("Road") || t.name.Contains("Tree") || t.name.Contains("Grass") || t.name.Contains("Coin"))
             {
                 t.Translate(movement);
             }

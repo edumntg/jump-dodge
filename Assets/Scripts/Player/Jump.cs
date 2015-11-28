@@ -66,10 +66,6 @@ public class Jump : MonoBehaviour
 				{
 					jumpState = 1;
 				}
-				else // this should be called when player has reached main position but isn't in floor, it means it's outside of road
-				{
-					isJumping = false;
-				}
 			}
         }
 

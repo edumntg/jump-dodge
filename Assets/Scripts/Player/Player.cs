@@ -7,9 +7,24 @@ public class Player : MonoBehaviour {
     public bool isOnFloor;
     public bool started = false;
 	public bool alive = true;
+    public int coins;
+    public int coin
+    {
+        get { return coins; }
+        set
+        {
+            coins += value;
+            Text scoreText = gameObject.GetComponentInParent<Text>();
+            if(scoreText != null)
+            {
+                scoreText.text = "Score: " + coins;
+            }
+        }
+    }
 	// Use this for initialization
 	void Start () {
         isOnFloor = false;
+        coins = 0;
 	}
 	
 	// Update is called once per frame
@@ -34,6 +49,12 @@ public class Player : MonoBehaviour {
                 Kill();
             }
         }
+        if(other.gameObject.tag == "Valuable")
+        {
+            //coin taken
+            coin += 1;
+            Destroy(other.gameObject);
+        }
     }
 
     public Vector3 GetPosition() { return transform.position; }
@@ -48,6 +69,5 @@ public class Player : MonoBehaviour {
             anim.Stop();
         }
 		alive = false;
-
     }
 }

@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
 
     public bool isOnFloor;
     public bool started = false;
+	public bool alive = true;
 	// Use this for initialization
 	void Start () {
         isOnFloor = false;
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour {
         {
             anim.Stop();
         }
+		alive = false;
 
     }
 }

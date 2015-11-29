@@ -70,4 +70,18 @@ public class Player : MonoBehaviour {
         }
 		alive = false;
     }
+
+    public void StartGame()
+    {
+        started = true;
+        Text[] t = gameObject.transform.parent.parent.GetComponentsInChildren<Text>();
+        foreach(Text tt in t)
+        {
+            if(tt.gameObject.name == "TapToStart")
+            {
+                tt.enabled = false;
+                break;
+            }
+        }
+    }
 }

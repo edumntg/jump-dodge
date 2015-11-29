@@ -31,7 +31,7 @@ public class Jump : MonoBehaviour
         {
             isJumping = true;
             moveDistance = new Vector3(0.0f, 5.0f, 0.0f);
-            player.started = true;
+            player.StartGame();
 
 			//
 			endPos[0] = new Vector3(gameObject.transform.position.x + moveDistance.x / 2, gameObject.transform.position.y + moveDistance.y, gameObject.transform.position.z + moveDistance.z / 2);
@@ -41,7 +41,7 @@ public class Jump : MonoBehaviour
         {
             isJumping = true;
             moveDistance = new Vector3(0.0f, 5.0f, 3.0f);
-            player.started = true;
+            player.StartGame();
 			//
 			endPos[0] = new Vector3(gameObject.transform.position.x + moveDistance.x / 2, gameObject.transform.position.y + moveDistance.y, gameObject.transform.position.z + moveDistance.z / 2);
 			endPos[1] = new Vector3(gameObject.transform.position.x + moveDistance.x, gameObject.transform.position.y, gameObject.transform.position.z + moveDistance.z);
@@ -50,7 +50,7 @@ public class Jump : MonoBehaviour
         {
             isJumping = true;
             moveDistance = new Vector3(0.0f, 5.0f, 3.0f);
-			player.started = true;
+            player.StartGame();
 			//
 			endPos[0] = new Vector3(gameObject.transform.position.x + moveDistance.x / 2, gameObject.transform.position.y + moveDistance.y, gameObject.transform.position.z - moveDistance.z / 2);
 			endPos[1] = new Vector3(gameObject.transform.position.x + moveDistance.x, gameObject.transform.position.y, gameObject.transform.position.z - moveDistance.z);

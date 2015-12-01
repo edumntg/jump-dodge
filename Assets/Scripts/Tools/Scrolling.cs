@@ -16,8 +16,8 @@ public class Scrolling : MonoBehaviour {
     int lastIncreased = 0;
     
 
-	void Start () {
-        //
+	void Start ()
+    {
 
 	}
 	

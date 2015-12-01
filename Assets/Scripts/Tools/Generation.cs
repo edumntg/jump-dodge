@@ -11,23 +11,41 @@ public class Generation : MonoBehaviour {
     string[] ObstaclesArray = { "Small Tree", "Tall Tree"};
     string[] TilesArray = { "Road", "Grass" };
 
+
+    //internal use
+    Object prefab;
+
+    GameObject ObjectI;
+    GameObject PlayerObject;
+    GameObject lastRoad;
+    GameObject ObstacleObject;
+
+    Item item;
+
+    Vector3 distance;
+    Vector3 basePosition;
+    Vector3 obstaclePosition;
+
+    Player player;
+
 	void Start () 
     {
+        player = gameObject.transform.parent.GetComponentInChildren<Player>();
+
         //let's create the player
         items = new Items();
         characters = new Characters();
         if (items.LoadItems() && characters.LoadCharacters())
         {
-            Object prefab;
             prefab = Resources.Load(characters.GetCharacter("Guy").GetDirectory(), typeof(GameObject));
-            GameObject PlayerObject = Instantiate(prefab) as GameObject;
+            PlayerObject = Instantiate(prefab) as GameObject;
             PlayerObject.transform.position = new Vector3(0, 0.5f, 0);
             PlayerObject.transform.SetParent(gameObject.transform.parent.FindChild("PlayerObject").transform);
+            
             for (int i = -4; i <= 4; i++) //initial 8 tiles
             {
                 int rand = Random.Range(0, 2);
-                GameObject ObjectI;
-                Item item = items.GetItem(TilesArray[rand]);
+                item = items.GetItem(TilesArray[rand]);
                 prefab = Resources.Load(item.GetDirectory(), typeof(GameObject));
                 ObjectI = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
                 ObjectI.transform.position = new Vector3(i * 9, 0, 0) + item.GetBasePosition();
@@ -40,14 +58,12 @@ public class Generation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GameObject lastRoad = tiles[tiles.Count - 1];
-        Vector3 distance = lastRoad.transform.position - GetPlayer().position;
+        lastRoad = tiles[tiles.Count - 1];
+        distance = lastRoad.transform.position - GetPlayer().position;
         if(distance.x <= 30)
         {
             int rand = Random.Range(0, 2);
-            GameObject ObjectI;
-            Object prefab;
-            Item item = items.GetItem(TilesArray[rand]);
+            item = items.GetItem(TilesArray[rand]);
             prefab = Resources.Load(item.GetDirectory(), typeof(GameObject));
             ObjectI = Instantiate(prefab) as GameObject;
             ObjectI.transform.position = new Vector3(lastRoad.transform.position.x + 9, 0, item.GetBasePosition().z);
@@ -55,7 +71,7 @@ public class Generation : MonoBehaviour {
             tiles.Add(ObjectI);
 
             //let's add obstacles to this tile
-            Player player = gameObject.transform.parent.GetComponentInChildren<Player>();
+            player = gameObject.transform.parent.GetComponentInChildren<Player>();
             if (player != null && player.started == true)
             {
                 int obstaclesCount = Random.Range(1, 2); //1 to 2
@@ -64,10 +80,10 @@ public class Generation : MonoBehaviour {
                 {
                     string obstacleName = ObstaclesArray[Random.Range(0, ObstaclesArray.Length)];
                     item = items.GetItem(obstacleName);
-                    Vector3 basePosition = ObjectI.transform.position;
-                    Vector3 obstaclePosition = new Vector3(basePosition.x, 0, 0) + item.GetBasePosition() + new Vector3(separations[(int)Random.Range(0, 3)], 0, separations[(int)Random.Range(0, 3)]);
+                    basePosition = ObjectI.transform.position;
+                    obstaclePosition = new Vector3(basePosition.x, 0, 0) + item.GetBasePosition() + new Vector3(separations[(int)Random.Range(0, 3)], 0, separations[(int)Random.Range(0, 3)]);
                     prefab = Resources.Load(item.GetDirectory(), typeof(GameObject));
-                    GameObject ObstacleObject = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+                    ObstacleObject = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
                     ObstacleObject.transform.position = obstaclePosition;
                     ObstacleObject.transform.SetParent(gameObject.transform.FindChild("Obstacles").transform);
                     obstacles.Add(ObstacleObject);

@@ -7,29 +7,24 @@ public class Player : MonoBehaviour {
     public bool isOnFloor;
     public bool started = false;
 	public bool alive = true;
-    public int coins;
-    public int coin
+    public int coinsCount;
+    public int coins
     {
-        get { return coins; }
+        get { return coinsCount; }
         set
         {
-            coins += value;
+            coinsCount += value;
             Text scoreText = gameObject.GetComponentInParent<Text>();
             if(scoreText != null)
             {
-                scoreText.text = "Score: " + coins;
+                scoreText.text = "Score: " + coinsCount;
             }
         }
     }
 	// Use this for initialization
 	void Start () {
         isOnFloor = false;
-        coins = 0;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+        coinsCount = 0;
 	}
 
     void OnTriggerEnter(Collider other)
@@ -52,7 +47,7 @@ public class Player : MonoBehaviour {
         if(other.gameObject.tag == "Valuable")
         {
             //coin taken
-            coin += 1;
+            coins += 1;
             Destroy(other.gameObject);
         }
     }

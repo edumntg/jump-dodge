@@ -7,8 +7,11 @@ public class FPSDisplay : MonoBehaviour {
 	
 	void Update()
 	{
-		deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-		Disp ();
+        if (Game.Debug)
+        {
+            deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+            Disp();
+        }
 	}
 	
 	void Disp()

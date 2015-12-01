@@ -10,4 +10,7 @@ public static class Game {
 	public static Vector3 baseScrollingDirection = new Vector3(-1.0f, 0.0f, 0.0f);
 	public static Vector3 scrollingSpeedIncrease = new Vector3(2.0f, 0.0f, 0.0f);
 	public static int speedIncreaseTime = 15; //ms
+
+    //debug shit
+    public static bool Debug = true;
 }

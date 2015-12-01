@@ -14,7 +14,6 @@ public class Characters {
     public bool LoadCharacters()
     {
         Character chart = null;
-
         if (File.Exists(file))
         {
             XmlTextReader reader = new XmlTextReader(file);

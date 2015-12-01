@@ -6,16 +6,18 @@ public class AnimationController : MonoBehaviour {
 
     Animator anim;
     public GameObject thePlayer;
+
+    Bounce bounceScript;
 	// Use this for initialization
 	void Start () 
     {
         anim = gameObject.GetComponent<Animator>();
+        bounceScript = GetComponentInChildren<Bounce>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-        Bounce bounceScript = GetComponentInChildren<Bounce>();
         if(bounceScript != null && bounceScript.isBouncing)
         {
             anim.SetBool("Jump", true);

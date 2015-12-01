@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 
 public class Generation : MonoBehaviour {
     Items items;
@@ -43,7 +42,7 @@ public class Generation : MonoBehaviour {
 	void Update () {
         GameObject lastRoad = tiles[tiles.Count - 1];
         Vector3 distance = lastRoad.transform.position - GetPlayer().position;
-        if(distance.x <= 25)
+        if(distance.x <= 30)
         {
             int rand = Random.Range(0, 2);
             GameObject ObjectI;
@@ -54,12 +53,12 @@ public class Generation : MonoBehaviour {
             ObjectI.transform.position = new Vector3(lastRoad.transform.position.x + 9, 0, item.GetBasePosition().z);
             ObjectI.transform.SetParent(gameObject.transform.FindChild("Tiles").transform);
             tiles.Add(ObjectI);
-            
+
             //let's add obstacles to this tile
             Player player = gameObject.transform.parent.GetComponentInChildren<Player>();
             if (player != null && player.started == true)
             {
-                int obstaclesCount = Random.Range(0, 3); //1 to 2
+                int obstaclesCount = Random.Range(1, 2); //1 to 2
                 int[] separations = { -3, 0, 3 };
                 for (int k = 1; k <= obstaclesCount; k++)
                 {
@@ -77,7 +76,7 @@ public class Generation : MonoBehaviour {
         }
 
         //let's delete roads outside of camera
-        foreach(GameObject it in tiles)
+       foreach(GameObject it in tiles)
         {
             distance = GetPlayer().position - it.transform.position;
             if(distance.x >= 20 && GetPlayer().position.x > it.transform.position.x && tiles.Count > 9)

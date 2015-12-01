@@ -4,8 +4,8 @@ using System;
 
 public class Scrolling : MonoBehaviour {
 
-    public Vector3 speed = new Vector3(2, 0, 0);
-    public Vector3 direction = new Vector3(-1, 0, 0);
+	public Vector3 speed = Game.baseScrollingSpeed;
+	public Vector3 direction = Game.baseScrollingDirection;
 
     public bool linkedToCamera = false;
     public bool isLooping = true;
@@ -14,9 +14,6 @@ public class Scrolling : MonoBehaviour {
     Vector3 movement;
     int timeElapsed = 0;
     int lastIncreased = 0;
-
-    int increaseSpeedElapsed = 30; //each n seconds speed will be increased by y
-    Vector3 speedToIncrease = new Vector3(1, 0, 0);
     
 
 	void Start () {
@@ -49,10 +46,10 @@ public class Scrolling : MonoBehaviour {
         }
 
         timeElapsed = Convert.ToInt32(Time.time);
-        if(timeElapsed > 0 && timeElapsed % increaseSpeedElapsed == 0 && timeElapsed > lastIncreased)
+        if(timeElapsed > 0 && timeElapsed % Game.speedIncreaseTime == 0 && timeElapsed > lastIncreased)
         {
             lastIncreased = timeElapsed;
-            speed += speedToIncrease;
+            speed += Game.scrollingSpeedIncrease;
         }
 	}
 }

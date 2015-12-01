@@ -9,7 +9,7 @@ public class Jump : MonoBehaviour
     public float jumpDistance = 5.0f;
 
     Vector3 moveDistance;
-	float jumpSpeed = 0.40f; //interpolation speed
+	float jumpSpeed = 0.30f; //interpolation speed
     Player player;
 	Vector3[] endPos = new Vector3[2];
 	int jumpState = 0; // 0 for going up, 1 for going down
@@ -18,8 +18,7 @@ public class Jump : MonoBehaviour
     {
         player = GetComponent<Player>();
     }
-
-
+	
     void Update()
     {
 		if(!player.alive)
@@ -36,7 +35,8 @@ public class Jump : MonoBehaviour
 			//
 			endPos[0] = new Vector3(gameObject.transform.position.x + moveDistance.x / 2, gameObject.transform.position.y + moveDistance.y, gameObject.transform.position.z + moveDistance.z / 2);
 			endPos[1] = new Vector3(gameObject.transform.position.x + moveDistance.x, gameObject.transform.position.y, gameObject.transform.position.z + moveDistance.z);
-        }
+		
+		}
         if (Input.GetKeyDown(KeyCode.A) && !isJumping)
         {
             isJumping = true;
